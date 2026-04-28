@@ -1,0 +1,87 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b0e14;
+  --surface: #121926;
+  --surface-soft: #161f2e;
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #f2f4f8;
+  --muted: #99a4b7;
+  --accent: #ff6b3d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 107, 61, 0.15), transparent 35%),
+    var(--bg);
+  color: var(--text);
+  font: 13px/1.4 "Segoe UI", Tahoma, sans-serif;
+}
+
+.popup {
+  padding: 16px;
+}
+
+.popup__header h1 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.popup__header p,
+.popup__footer p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+.popup__section {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.popup__field,
+.popup__toggles label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.popup__field + .popup__field,
+.popup__toggles label + label {
+  margin-top: 12px;
+}
+
+.popup__range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type="range"],
+input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+
+select {
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+kbd {
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-soft);
+  font-size: 11px;
+}

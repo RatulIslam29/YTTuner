@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tubix</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="popup">
+      <header class="popup__header">
+        <h1>Tubix</h1>
+        <p>Quick controls for youtube.com</p>
+      </header>
+
+      <section class="popup__section">
+        <label class="popup__field">
+          <span>Videos per row</span>
+          <div class="popup__range">
+            <input id="videosPerRow" type="range" min="2" max="10" step="1">
+            <strong id="videosPerRowValue">4</strong>
+          </div>
+        </label>
+
+        <label class="popup__field">
+          <span>Player size</span>
+          <div class="popup__range">
+            <input id="playerSizePercent" type="range" min="50" max="150" step="5">
+            <strong id="playerSizePercentValue">100%</strong>
+          </div>
+        </label>
+
+        <label class="popup__field">
+          <span>Default speed</span>
+          <select id="defaultPlaybackRate">
+            <option value="0.75">0.75x</option>
+            <option value="1">1x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="1.75">1.75x</option>
+            <option value="2">2x</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="popup__section popup__toggles">
+        <label><span>Hide Shorts</span><input id="hideShorts" type="checkbox"></label>
+        <label><span>Hide Sidebar</span><input id="hideSidebar" type="checkbox"></label>
+        <label><span>RIP AD</span><input id="hideAdPlaceholders" type="checkbox"></label>
+        <label><span>Focus mode</span><input id="focusMode" type="checkbox"></label>
+        <label><span>Search results grid</span><input id="searchGridView" type="checkbox"></label>
+        <label><span>Auto-scroll Shorts</span><input id="autoScrollShorts" type="checkbox"></label>
+        <label><span>Pin video on scroll</span><input id="pinVideoWhileScrolling" type="checkbox"></label>
+        <label><span>Back to top button</span><input id="showBackToTop" type="checkbox"></label>
+        <label><span>Hide YT button</span><input id="hideLauncherButton" type="checkbox"></label>
+      </section>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
