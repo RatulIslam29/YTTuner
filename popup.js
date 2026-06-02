@@ -122,3 +122,8 @@ async function init() {
 }
 
 init();
+
+// Close popup when it loses focus (clicking outside)
+window.addEventListener('blur', () => {
+  window.close();
+});

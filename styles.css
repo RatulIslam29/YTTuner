@@ -4,7 +4,7 @@
   --ytls-panel-bg: rgba(11, 14, 20, 0.92);
   --ytls-panel-border: rgba(255, 255, 255, 0.1);
   --ytls-panel-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-  --ytls-accent: #ff6b3d;
+  --ytls-accent: #f00e0e;
   --ytls-text: #f2f4f8;
   --ytls-muted: #9da7b8;
 }
@@ -167,7 +167,7 @@ html.ytls-video-pinned ytd-watch-flexy #player {
   height: 43px;
   border: 1px solid var(--ytls-panel-border);
   border-radius: 15px;
-  background: linear-gradient(180deg, rgba(255, 107, 61, 0.94), rgba(194, 44, 19, 0.98));
+  background: linear-gradient(180deg, rgb(192, 18, 18), rgba(194, 44, 19, 0.98));
   color: #fff3eb;
   font-size: 14px;
   font-weight: 700;
