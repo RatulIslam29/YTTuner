@@ -33,14 +33,19 @@
 
         <label class="popup__field">
           <span>Default speed</span>
-          <select id="defaultPlaybackRate">
-            <option value="0.75">0.75x</option>
-            <option value="1">1x</option>
-            <option value="1.25">1.25x</option>
-            <option value="1.5">1.5x</option>
-            <option value="1.75">1.75x</option>
-            <option value="2">2x</option>
-          </select>
+          <div class="ytls-dropdown" id="defaultPlaybackRateDropdown">
+            <button type="button" class="ytls-dropdown__trigger" id="defaultPlaybackRateTrigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="defaultPlaybackRateLabel">1x</span>
+            </button>
+            <ul class="ytls-dropdown__menu" id="defaultPlaybackRateMenu" role="listbox" tabindex="-1">
+              <li role="option" data-value="0.75">0.75x</li>
+              <li role="option" data-value="1">1x</li>
+              <li role="option" data-value="1.5">1.5x</li>
+              <li role="option" data-value="2">2x</li>
+              <li role="option" data-value="2.5">2.5x</li>
+              <li role="option" data-value="3">3x</li>
+            </ul>
+          </div>
         </label>
       </section>
 

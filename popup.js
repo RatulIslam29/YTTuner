@@ -22,7 +22,10 @@ const elements = {
   playerSizePercentValue: document.getElementById("playerSizePercentValue"),
   hideShorts: document.getElementById("hideShorts"),
   hideSidebar: document.getElementById("hideSidebar"),
-  defaultPlaybackRate: document.getElementById("defaultPlaybackRate"),
+  defaultPlaybackRateDropdown: document.getElementById("defaultPlaybackRateDropdown"),
+  defaultPlaybackRateTrigger: document.getElementById("defaultPlaybackRateTrigger"),
+  defaultPlaybackRateLabel: document.getElementById("defaultPlaybackRateLabel"),
+  defaultPlaybackRateMenu: document.getElementById("defaultPlaybackRateMenu"),
   hideAdPlaceholders: document.getElementById("hideAdPlaceholders"),
   focusMode: document.getElementById("focusMode"),
   searchGridView: document.getElementById("searchGridView"),
@@ -56,7 +59,7 @@ function render(settings) {
   elements.playerSizePercentValue.textContent = `${settings.playerSizePercent}%`;
   elements.hideShorts.checked = settings.hideShorts;
   elements.hideSidebar.checked = settings.hideSidebar;
-  elements.defaultPlaybackRate.value = String(settings.defaultPlaybackRate);
+  setDropdownValue(String(settings.defaultPlaybackRate));
   elements.hideAdPlaceholders.checked = settings.hideAdPlaceholders;
   elements.focusMode.checked = settings.focusMode;
   elements.searchGridView.checked = settings.searchGridView;
@@ -64,6 +67,18 @@ function render(settings) {
   elements.pinVideoWhileScrolling.checked = settings.pinVideoWhileScrolling;
   elements.showBackToTop.checked = settings.showBackToTop;
   elements.hideLauncherButton.checked = settings.hideLauncherButton;
+}
+
+function setDropdownValue(value) {
+  elements.defaultPlaybackRateLabel.textContent = `${value}x`;
+  elements.defaultPlaybackRateMenu.querySelectorAll("li").forEach((li) => {
+    li.setAttribute("aria-selected", li.dataset.value === value ? "true" : "false");
+  });
+}
+
+function closeDropdown() {
+  elements.defaultPlaybackRateDropdown.classList.remove("ytls-open");
+  elements.defaultPlaybackRateTrigger.setAttribute("aria-expanded", "false");
 }
 
 async function init() {
@@ -83,11 +98,27 @@ async function init() {
     render(settings);
   });
 
-  ["defaultPlaybackRate"].forEach((key) => {
-    elements[key].addEventListener("change", () => {
-      settings[key] = elements[key].value;
-      saveSettings(settings);
-    });
+  elements.defaultPlaybackRateTrigger.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const isOpen = elements.defaultPlaybackRateDropdown.classList.toggle("ytls-open");
+    elements.defaultPlaybackRateTrigger.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  elements.defaultPlaybackRateMenu.addEventListener("click", (event) => {
+    const option = event.target.closest("li[data-value]");
+    if (!option) {
+      return;
+    }
+    settings.defaultPlaybackRate = option.dataset.value;
+    setDropdownValue(option.dataset.value);
+    saveSettings(settings);
+    closeDropdown();
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!elements.defaultPlaybackRateDropdown.contains(event.target)) {
+      closeDropdown();
+    }
   });
 
   [

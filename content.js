@@ -123,14 +123,19 @@ function ensurePanel() {
 
         <label class="ytls-control">
           <span>Default speed</span>
-          <select class="ytls-speed-select">
-            <option value="0.75">0.75x</option>
-            <option value="1">1x</option>
-            <option value="1.25">1.25x</option>
-            <option value="1.5">1.5x</option>
-            <option value="1.75">1.75x</option>
-            <option value="2">2x</option>
-          </select>
+          <div class="ytls-dropdown">
+            <button type="button" class="ytls-speed-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span class="ytls-speed-label">1x</span>
+            </button>
+            <ul class="ytls-dropdown__menu ytls-speed-menu" role="listbox" tabindex="-1">
+              <li role="option" data-value="0.75">0.75x</li>
+              <li role="option" data-value="1">1x</li>
+              <li role="option" data-value="1.5">1.5x</li>
+              <li role="option" data-value="2">2x</li>
+              <li role="option" data-value="2.5">2.5x</li>
+              <li role="option" data-value="3">3x</li>
+            </ul>
+          </div>
         </label>
 
         <label class="ytls-switch">
@@ -168,7 +173,10 @@ function ensurePanel() {
   const hideAds = root.querySelector(".ytls-hide-ads");
   const focusMode = root.querySelector(".ytls-focus-mode");
   const searchGridToggle = root.querySelector(".ytls-search-grid-toggle");
-  const speedSelect = root.querySelector(".ytls-speed-select");
+  const speedDropdown = root.querySelector(".ytls-dropdown");
+  const speedTrigger = root.querySelector(".ytls-speed-trigger");
+  const speedLabel = root.querySelector(".ytls-speed-label");
+  const speedMenu = root.querySelector(".ytls-speed-menu");
   const autoScrollShorts = root.querySelector(".ytls-auto-scroll-shorts");
   const pinVideo = root.querySelector(".ytls-pin-video");
   const backToTopToggle = root.querySelector(".ytls-back-to-top-toggle");
@@ -218,10 +226,30 @@ function ensurePanel() {
     debounceApply(0);
   });
 
-  speedSelect.addEventListener("change", (event) => {
-    settings.defaultPlaybackRate = event.target.value;
+  speedTrigger.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const isOpen = speedDropdown.classList.toggle("ytls-open");
+    speedTrigger.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  speedMenu.addEventListener("click", (event) => {
+    const option = event.target.closest("li[data-value]");
+    if (!option) {
+      return;
+    }
+    settings.defaultPlaybackRate = option.dataset.value;
     saveSettings();
     debounceApply(0);
+    updatePanelUI();
+    speedDropdown.classList.remove("ytls-open");
+    speedTrigger.setAttribute("aria-expanded", "false");
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!speedDropdown.contains(event.target)) {
+      speedDropdown.classList.remove("ytls-open");
+      speedTrigger.setAttribute("aria-expanded", "false");
+    }
   });
 
   autoScrollShorts.addEventListener("change", (event) => {
@@ -260,7 +288,10 @@ function ensurePanel() {
     hideAds,
     focusMode,
     searchGridToggle,
-    speedSelect,
+    speedDropdown,
+    speedTrigger,
+    speedLabel,
+    speedMenu,
     autoScrollShorts,
     pinVideo,
     backToTopToggle,
@@ -284,7 +315,13 @@ function updatePanelUI() {
   panelElements.hideAds.checked = settings.hideAdPlaceholders;
   panelElements.focusMode.checked = settings.focusMode;
   panelElements.searchGridToggle.checked = settings.searchGridView;
-  panelElements.speedSelect.value = String(settings.defaultPlaybackRate);
+  panelElements.speedLabel.textContent = `${settings.defaultPlaybackRate}x`;
+  panelElements.speedMenu.querySelectorAll("li").forEach((li) => {
+    li.setAttribute(
+      "aria-selected",
+      li.dataset.value === String(settings.defaultPlaybackRate) ? "true" : "false"
+    );
+  });
   panelElements.autoScrollShorts.checked = settings.autoScrollShorts;
   panelElements.pinVideo.checked = settings.pinVideoWhileScrolling;
   panelElements.backToTopToggle.checked = settings.showBackToTop;
